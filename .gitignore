@@ -1,0 +1,13 @@
+/platforms
+/www
+/dist
+/.*\.DS_Store$
+/.sass-cache
+/.tmp
+/bower_components
+/node_modules
+.DS_Store
+/npm-debug.log
+/hooks
+/plugins/android.json
+/plugins/ios.json
