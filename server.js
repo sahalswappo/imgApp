@@ -17,14 +17,25 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 
 });
-var im = require('imagemagick');
+// var im = require('imagemagick');
+gm = require('gm').subClass({imageMagick: true});
+
 app.post('/api/upload', upload, function(req, res, next) {
     if (req.files) {
         //get image size
-        im.identify(req.files.image.path, function(err, size) {
-            if (err) throw err;
-            console.log(size.height);
+        var sizeOf = require('image-size');
+var dimensions = sizeOf(req.files.image.path);
+console.log(dimensions.width, dimensions.height);
+        gm(req.files.image.path)
+        .size(function (err, size) {
+          if (!err)
+            console.log(size.width > size.height ? 'wider' : 'taller than you');
         });
+        // im.identify(req.files.image.path, function(err, size) {
+        //     if (err) throw err;
+        //     imgSize = size.height;
+        // console.log(imgSize)
+        // });
         // console.log(imgSize)
         res.send(req.files);
     }
