@@ -6,12 +6,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body ng-app="imgApp">
     <div id='main' class="container" ng-controller="mainController">
         <div class="col-md-offset-2 col-md-8">
             <div class="clearfix">
-                <input class="form-control" type="file" />
-                <input class="btn btn-primary" type="submit" value="Upload">
+                <form ng-submit="submit()" enctype="multipart/form-data">
+                    <input type="file" class="form-control" img-up="imgFile" name="displayImage"/>
+                    <input class="btn btn-primary" type="submit" value="Upload">
+                </form>
+                <img class="col-xs-12" ng-src="{{imgUrl}}" alt=""/>
             </div>
         </div>
     </div>
