@@ -42,7 +42,11 @@ app.post('/api/upload', upload, function(req, res, next) {
             var thumbnailpath = 'app/upload/thumb' + newSize + "/" + req.files.image.name;
             gm(imageUploaded)
                 .resize(newSize, newSize, '^')
-                .write(thumbnailpath);
+                .write(thumbnailpath, function(err) {
+                    if (!err) {
+                        console.log(' hooray! ');
+                    } 
+                });
         };
         res.send(req.files);
     }
