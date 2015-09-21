@@ -11,3 +11,26 @@ body {
 	padding: 10px;
 	background-color: #f5f5f5;
 }
+
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    height: 150px;
+    text-align: center;
+    /*padding-top: 25px;*/
+    /*margin: 10px;*/
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+.preview {
+    height: 150px;
+    text-align: center;
+}
+
+.preview img {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
+}
