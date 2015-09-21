@@ -42,7 +42,7 @@ app.get('/totalpage', function(req, res) {
 var gm = require('gm').subClass({
     imageMagick: true
 });
-var is = require('image-size');
+var is = require('image-size-big-max-buffer');
 
 app.post('/api/upload', upload, function(req, res, next) {
     if (req.files) {
