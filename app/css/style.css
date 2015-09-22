@@ -114,6 +114,10 @@ body {
     border-color: tomato;
     background-color: tomato;
 }
+.success {
+    text-align: center;
+    min-height: 87px;
+}
 
 .success img {
     display: inline-block;
@@ -199,4 +203,8 @@ span.text-content span {
     margin-top: 20px;
     width: 12px;
     z-index: 10;
+}
+
+img {
+    max-width: 100%;
 }

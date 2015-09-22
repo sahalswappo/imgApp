@@ -14,7 +14,7 @@ var itemPerPage = 2;
 var upload = multer({
     dest: 'app/upload/',
     onFileUploadStart: function(file, req, res) {
-        return ((/(gif|jpg|jpeg|tiff|png|svg)$/i).test(file.extension.toLowerCase())) // check extension
+        return ((/(gif|jpg|jpeg|tiff|png|svg)/i).test(file.extension.toLowerCase())) // check extension
     }
 });
 
