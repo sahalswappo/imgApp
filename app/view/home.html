@@ -1,9 +1,22 @@
 <div class="row">
-   <div class="preview col-xs-4">
-        <img ngf-src="!files.$error &amp;&amp; files">
+    <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-8 col-sm-offset-2 upload-form">
+        <div class="preview clearfix">
+            <img class="col-xs-12" ngf-src="!files.$error &amp;&amp; files">
+        </div>
+        <div class="input-group">
+            <input type="file" id="imageFile" class="form-control" ngf-select ng-model="files" name="file" required/>
+            <span class="input-group-btn">
+        	<button ng-click="submit()" class="btn btn-primary">Upload</button>
+        </span>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 clearfix success" ng-show="success">
+            <img class="col-xs-12" ng-src="{{imgUrl}}" alt="" />
+            <span class="text-content"><span>
+            <p>
+            <label for="">Parmanent Link:</label>
+            	<input type="text" class="form-control" value="http://localhost:3000/{{imgUrl}}">
+            </p>
+        </div>
     </div>
-    <input type="file" ngf-select ng-model="files" name="file" accept="image/*" ngf-multiple="false" required>
-    
-    <button ng-click="submit()" class="btn btn-primary">Up</button>
-    <img class="col-xs-5 center" ng-src="{{imgUrl}}" alt="" />
 </div>
+<div class='error' ng-show="failedUpload">Uploaded format not supported!</div>

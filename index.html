@@ -8,13 +8,10 @@
 </head>
 
 <body ng-app="imgApp">
-    <div id='main' class="container-table">
-    <div class="navbar navbar-defult">
-        <a href="#/">Home</a>
-        <a href="#/gallery">Gallery</a>
-    </div>
-        <div class="col-md-offset-2 col-md-8 center-div" ng-view>
-            
+    <div class="container container-table">
+        <div class="row vertical-center-row">
+            <div class="main-body clearfix" ng-view>
+            </div>
         </div>
     </div>
     <script src="/js/angular.min.js"></script>
@@ -25,7 +22,3 @@
 </body>
 
 </html>
-
-
-
-

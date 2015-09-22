@@ -48,7 +48,7 @@ var gm = require('gm').subClass({
 var is = require('image-size-big-max-buffer');
 
 app.post('/api/upload', upload, function(req, res, next) {
-    if (req.files) {
+    if (req.files.file) {
         var imageUploaded = req.files.file.path;
         var imageName = req.files.file.name;
         //get image size
@@ -79,6 +79,8 @@ app.post('/api/upload', upload, function(req, res, next) {
         InserData(saveImage);
         res.send(req.files);
         res.end();
+    } else {
+        res.end('failed');
     }
 });
 

@@ -22,7 +22,6 @@ app.config(['$routeProvider',
     $scope.submit = function() {
         $scope.upload($scope.files);
     }
-
     $scope.upload = function(files) {
         if (files) {
             var file = files;
@@ -31,9 +30,18 @@ app.config(['$routeProvider',
                     url: '/api/upload',
                     file: file
                 }).success(function(data, status, headers, config) {
-                    $timeout(function() {
+                    if (data.file) {
+                        $scope.success = true;
+                        document.getElementById("imageFile").value = "";
+                        $scope.files = null;
                         $scope.imgUrl = 'upload/' + data.file.name;
-                    });
+                    } else {
+                        $scope.success = false;
+                        $scope.failedUpload = true;
+                        $timeout(function() {
+                            $scope.failedUpload = false;
+                        }, 3000);
+                    }
                 });
             }
         }
