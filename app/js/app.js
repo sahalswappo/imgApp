@@ -58,7 +58,15 @@ app.config(['$routeProvider',
     }
     $scope.page();
     Database.GetFunction('/totalpage').then(function(data) {
-        $scope.totalPage = Math.floor(data.data / 2);
+        var pagecount = 0;
+        if (data.data > 2) {
+            $scope.nextButton = true;
+            if ((data.data / 2) % 1 == 0)
+                pagecount = (data.data / 2) - 1;
+            else
+                pagecount = Math.floor(data.data / 2)
+        }
+        $scope.totalPage = pagecount;
     });
 })
 

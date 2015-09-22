@@ -1,8 +1,15 @@
-<button class="col-xs-1" ng-click="page(currentPage-1)" ng-show="(currentPage > 0)">
-    back</button>
-<div class="col-xs-10" ng-repeat="image in galleries">
-    {{image.image}} {{image.uploadDate}}
-</div>
-<div ng-if="galleries.length > 1">
-    <button class="col-xs-1" ng-click="page(currentPage+1)" ng-hide="(currentPage >= totalPage)">next</button>
+<div class="gallery row">
+    <div class="col-xs-12">
+        <div class="btn btn-info paging" ng-click="page(currentPage-1)" ng-show="(currentPage > 0)">
+            <i class="fa fa-angle-left"></i>
+        </div>
+        <div class="col-xs-6" ng-repeat="image in galleries">
+            <img src="/upload/{{image.image}}" class="col-xs-12" alt="">
+        </div>
+        <div ng-show="nextButton">
+            <div class="btn btn-info paging" ng-click="page(currentPage+1)" ng-hide="(currentPage >= totalPage)">
+                <i class="fa fa-angle-right"></i>
+            </div>
+        </div>
+    </div>
 </div>

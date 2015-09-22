@@ -14,7 +14,7 @@ var itemPerPage = 2;
 var upload = multer({
     dest: 'app/upload/',
     onFileUploadStart: function(file, req, res) {
-        return ((/(gif|jpg|jpeg|tiff|png)$/i).test(file.extension.toLowerCase())) // check extension
+        return ((/(gif|jpg|jpeg|tiff|png|svg)$/i).test(file.extension.toLowerCase())) // check extension
     }
 });
 
@@ -29,8 +29,8 @@ app.get('/gallery', function(req, res) {
     if (req.query.page) {
         skip = req.query.page * itemPerPage;
     }
-    //pagination retrive email
-    db.find({}).sort({uploadDate: 1}).skip(skip).limit(itemPerPage).exec(function(err, docs) {
+    //pagination retrive image sort by upload date desc to get latest
+    db.find({}).sort({uploadDate: -1}).skip(skip).limit(itemPerPage).exec(function(err, docs) {
         res.send(docs)
         res.end();
     });

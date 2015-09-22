@@ -5,14 +5,27 @@
     <title>Image Hotlink</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css">
 </head>
 
 <body ng-app="imgApp">
+    <ul id="menu">
+        <a href="#/">
+            <li class="icon fa fa-cloud-upload" id="uno"></li>
+        </a>
+        <a href="#/gallery">
+            <li class="icon fa fa-picture-o" id="dos"></li>
+        </a>
+    </ul>
     <div class="container container-table">
         <div class="row vertical-center-row">
             <div class="main-body clearfix" ng-view>
             </div>
         </div>
+        <ul id="pagelogo">
+            <li class="img">IMG</li>
+            <li class="upload">UPLOAD</li>
+        </ul>
     </div>
     <script src="/js/angular.min.js"></script>
     <script src="/js/angular-route.min.js"></script>
