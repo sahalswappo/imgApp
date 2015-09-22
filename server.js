@@ -2,17 +2,19 @@ var express = require('express');
 var app = express();
 var multer = require('multer');
 var path = require('path');
+
 var Datastore = require('nedb'),
     db = new Datastore({
         filename: 'db/imagedb.db',
         autoload: true
     });
+//item per page    
 var itemPerPage = 2;
 
 var upload = multer({
     dest: 'app/upload/',
     onFileUploadStart: function(file, req, res) {
-        return ((/(gif|jpg|jpeg|tiff|png)$/i).test(file.extension.toLowerCase()))
+        return ((/(gif|jpg|jpeg|tiff|png|svg)$/i).test(file.extension.toLowerCase())) // check extension
     }
 });
 
@@ -27,13 +29,14 @@ app.get('/gallery', function(req, res) {
     if (req.query.page) {
         skip = req.query.page * itemPerPage;
     }
-    db.find({}).skip(skip).limit(itemPerPage).exec(function(err, docs) {
+    //pagination retrive image sort by upload date desc to get latest
+    db.find({}).sort({uploadDate: -1}).skip(skip).limit(itemPerPage).exec(function(err, docs) {
         res.send(docs)
         res.end();
     });
 });
 
-app.get('/totalpage', function(req, res) {
+app.get('/totalpage', function(req, res) { //get total page
     db.count({}, function(err, count) {
         res.send(count.toString())
     });
@@ -45,9 +48,9 @@ var gm = require('gm').subClass({
 var is = require('image-size-big-max-buffer');
 
 app.post('/api/upload', upload, function(req, res, next) {
-    if (req.files) {
-        var imageUploaded = req.files.image.path;
-        var imageName = req.files.image.name;
+    if (req.files.file) {
+        var imageUploaded = req.files.file.path;
+        var imageName = req.files.file.name;
         //get image size
         var size = is(imageUploaded);
         var needResize = 0;
@@ -76,6 +79,8 @@ app.post('/api/upload', upload, function(req, res, next) {
         InserData(saveImage);
         res.send(req.files);
         res.end();
+    } else {
+        res.end('failed');
     }
 });
 

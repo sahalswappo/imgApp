@@ -1,7 +1,26 @@
-<div class="clearfix">
-                <form ng-submit="submit()" enctype="multipart/form-data">
-                    <input type="file" class="form-control" img-up="imgFile" name="displayImage" accept="image/*"/>
-                    <input class="btn btn-primary" type="submit" value="Upload">
-                </form>
-                <img class="col-xs-5 center" ng-src="{{imgUrl}}" alt=""/>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-8 col-sm-offset-2 upload-form">
+        <div class="preview clearfix">
+            <img class="col-xs-12" ngf-src="!files.$error &amp;&amp; files">
+        </div>
+        <form ng-submit="submit()">
+            <div class="input-group">
+                <input type="file" id="imageFile" class="form-control" ngf-select ng-model="files" accept="image/*" name="file" required/>
+                <span class="input-group-btn">
+             <button type="submit" class="btn btn-success btn-tomato">
+                <i class="fa fa-upload"></i> Upload
+            </button>
+            </span>
             </div>
+        </form>
+        <div class="col-md-12 col-xs-12 col-sm-12 clearfix success" ng-show="success">
+            <img class="col-xs-12" ng-src="{{imgUrl}}" alt="" />
+            <span class="text-content"><span>
+            <p>
+            <label for="">Parmanent Link:</label>
+                <input type="text" class="form-control" value="http://localhost:3000/{{imgUrl}}">
+            </p>
+        </div>
+    </div>
+</div>
+<div class='error' ng-show="failedUpload">Selected file format not supported!</div>
