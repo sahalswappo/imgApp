@@ -1,8 +1,9 @@
 <div class="row">
-    <div ngf-drop ngf-select ng-model="files" class="drop-box col-xs-4" ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true" accept="image/*" ngf-pattern="'image/*'">Drop image here or click to upload</div>
-    <div class="preview col-xs-4">
+   <div class="preview col-xs-4">
         <img ngf-src="!files.$error &amp;&amp; files">
     </div>
+    <input type="file" ngf-select ng-model="files" name="file" accept="image/*" ngf-multiple="false" required>
+    
     <button ng-click="submit()" class="btn btn-primary">Up</button>
     <img class="col-xs-5 center" ng-src="{{imgUrl}}" alt="" />
 </div>
