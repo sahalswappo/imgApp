@@ -3,8 +3,8 @@
         <div class="btn btn-info paging" ng-click="page(currentPage-1)" ng-show="(currentPage > 0)">
             <i class="fa fa-angle-left"></i>
         </div>
-        <div class="col-xs-6" ng-repeat="image in galleries">
-            <img src="/upload/{{image.image}}" class="col-xs-12" alt="">
+        <div class="col-xs-6 text-center" ng-repeat="image in galleries">
+            <img src="/upload/{{image.image}}"  alt="">
         </div>
         <div ng-show="nextButton">
             <div class="btn btn-info paging" ng-click="page(currentPage+1)" ng-hide="(currentPage >= totalPage)">
