@@ -1,25 +1,35 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-8 col-sm-offset-2 upload-form">
         <div class="preview clearfix">
-            <img class="col-xs-12" ngf-src="!files.$error &amp;&amp; files">
+            <img class="col-xs-12" ngf-src="!files.$error &amp;&amp; files" />
         </div>
         <form ng-submit="submit()">
             <div class="input-group">
-                <input type="file" id="imageFile" class="form-control" ngf-select ng-model="files" accept="image/*" name="file" required/>
+                <input type="file" id="imageFile" class="form-control" ngf-select ng-model="files" accept="image/*" name="file" required />
                 <span class="input-group-btn">
-             <button type="submit" class="btn btn-success btn-tomato">
-                <i class="fa fa-upload"></i> Upload
-            </button>
-            </span>
+                    <button type="submit" class="btn btn-success btn-tomato">
+                        <i class="fa fa-upload"></i> Upload
+                    </button>
+                </span>
             </div>
         </form>
-        <div class="col-md-12 col-xs-12 col-sm-12 clearfix success" ng-show="success">
-            <img ng-src="{{imgUrl}}" alt="" />
-            <span class="text-content"><span>
-            <p>
+    </div>
+    <div ng-if="success">
+        <div class="col-md-8 col-xs-8 col-sm-8 clearfix success">
+            <a href="/upload/{{imgUrl}}" target="_blank">
+                <img ng-src="/upload/{{imgUrl}}" alt="" />
+            </a>
+            <span class="text-content">
+        <p>
             <label for="">Parmanent Link:</label>
-                <input type="text" class="form-control" value="http://localhost:3000/{{imgUrl}}">
-            </p>
+            <input type="text" class="form-control" value="http://localhost:3000/{{imgUrl}}">
+        </p>
+        </span>
+        </div>
+        <div class="col-md-4 col-xs-4 col-sm-4" ng-repeat="thumb in thumbnail track by $index">
+            <a href="upload/thumb{{$index+5 | mathPow}}/{{imgUrl}}" target="_blank">
+                <img src="upload/thumb{{$index+5 | mathPow}}/{{imgUrl}}" class="thumbnail">
+            </a>
         </div>
     </div>
 </div>

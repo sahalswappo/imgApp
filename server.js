@@ -30,7 +30,9 @@ app.get('/gallery', function(req, res) {
         skip = req.query.page * itemPerPage;
     }
     //pagination retrive image sort by upload date desc to get latest
-    db.find({}).sort({uploadDate: -1}).skip(skip).limit(itemPerPage).exec(function(err, docs) {
+    db.find({}).sort({
+        uploadDate: -1
+    }).skip(skip).limit(itemPerPage).exec(function(err, docs) {
         res.send(docs)
         res.end();
     });
@@ -45,40 +47,22 @@ app.get('/totalpage', function(req, res) { //get total page
 var gm = require('gm').subClass({
     imageMagick: true
 });
-var is = require('image-size-big-max-buffer');
 
-app.post('/api/upload', upload, function(req, res, next) {
+app.post('/api/upload', upload, function(req, res, next) { //handle upload
     if (req.files.file) {
         var imageUploaded = req.files.file.path;
         var imageName = req.files.file.name;
-        //get image size
-        var size = is(imageUploaded);
-        var needResize = 0;
-        //get how many thumbnail needed
-        if (size.height > 128 && size.width > 128)
-            needResize = 3;
-        else if (size.height > 64 && size.width > 64)
-            needResize = 2;
-        else if (size.height > 32 && size.width > 32)
-            needResize = 1;
-        //create the thumbnail
-        for (var i = 1; i <= needResize; i++) {
-            var newSize = Math.pow(2, (i + 4));
-            var thumbnailpath = 'app/upload/thumb' + newSize + "/" + imageName;
-            gm(imageUploaded)
-                .resize(newSize, newSize, '^')
-                .write(thumbnailpath, function(err) {
-                    if (err) console.log(err)
-                });
-        };
-        //save upload image inside db
-        var saveImage = {
-            image: imageName,
-            uploadDate: new Date()
-        };
-        InserData(saveImage);
-        res.send(req.files);
-        res.end();
+        processImage(imageUploaded, imageName, function(err, resize) {
+            //save image
+            var saveImage = {
+                image: imageName,
+                thumbnail: resize,
+                uploadDate: new Date()
+            };
+            InserData(saveImage);
+            res.send(saveImage);
+            res.end();
+        });
     } else {
         res.end('failed');
     }
@@ -88,5 +72,31 @@ app.post('/api/upload', upload, function(req, res, next) {
 function InserData(data) {
     db.insert(data, function(err, newDoc) {});
 }
+
+//process image
+function processImage(path, name, callback) {
+    var img = gm(path);
+    var resize = 0;
+    img.size(function(err, val) {
+        //get how many thumbnail needed
+        if (val.height > 128 && val.width > 128)
+            resize = 3;
+        else if (val.height > 64 && val.width > 64)
+            resize = 2;
+        else if (val.height > 32 && val.width > 32)
+            resize = 1;
+        //create the thumbnail
+        for (var i = 1; i <= resize; i++) {
+            var newSize = Math.pow(2, (i + 4));
+            var thumbnailpath = 'app/upload/thumb' + newSize + "/" + name;
+            gm(path)
+                .resize(newSize, newSize, '^')
+                .write(thumbnailpath, function(err) {
+                    if (err) console.log(err)
+                });
+        };
+        callback(err, resize);
+    });
+};
 
 app.listen(3000);

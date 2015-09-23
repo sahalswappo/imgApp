@@ -22,6 +22,7 @@ app.config(['$routeProvider',
     $scope.submit = function() {
         $scope.upload($scope.files);
     }
+
     $scope.upload = function(files) {
         if (files) {
             var file = files;
@@ -30,10 +31,13 @@ app.config(['$routeProvider',
                     url: '/api/upload',
                     file: file
                 }).success(function(data, status, headers, config) {
-                    if (data.file) {
+                    if (data.image) {
                         $scope.success = true;
                         $scope.files = null;
-                        $scope.imgUrl = 'upload/' + data.file.name;
+                        $scope.imgUrl = data.image;
+                        $timeout(function() {
+                            $scope.thumbnail = new Array(data.thumbnail);
+                        },200);
                     } else {
                         $scope.success = false;
                         $scope.failedUpload = true;
@@ -80,4 +84,10 @@ app.config(['$routeProvider',
             return defer.promise;
         }
     }
-]);
+])
+
+.filter('mathPow', function() {
+    return function(exponent) {
+        return Math.pow(2, exponent);
+    }
+});
