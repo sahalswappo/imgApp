@@ -1,4 +1,3 @@
-//chirpApp.js
 var app = angular.module('imgApp', ['ngRoute', 'ngFileUpload']);
 
 app.config(['$routeProvider',
