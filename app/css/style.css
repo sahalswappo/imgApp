@@ -200,7 +200,7 @@ span.text-content span {
 .paging {
     margin-left: -14;
     position: fixed;
-    margin-top: 20px;
+    top:45%;
     width: 12px;
     z-index: 10;
 }

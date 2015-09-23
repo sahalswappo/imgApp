@@ -32,7 +32,6 @@ app.config(['$routeProvider',
                 }).success(function(data, status, headers, config) {
                     if (data.file) {
                         $scope.success = true;
-                        document.getElementById("imageFile").value = "";
                         $scope.files = null;
                         $scope.imgUrl = 'upload/' + data.file.name;
                     } else {
@@ -52,30 +51,33 @@ app.config(['$routeProvider',
     $scope.currentPage = 0;
     $scope.page = function(page) {
         Database.GetFunction('/gallery?page=' + page).then(function(data) {
-            $scope.galleries = data.data;
+            $scope.galleries = data;
         })
         $scope.currentPage = page;
     }
     $scope.page();
     Database.GetFunction('/totalpage').then(function(data) {
         var pagecount = 0;
-        if (data.data > 2) {
+        if (data > 2) {
             $scope.nextButton = true;
-            if ((data.data / 2) % 1 == 0)
-                pagecount = (data.data / 2) - 1;
+            if ((data / 2) % 1 == 0)
+                pagecount = (data / 2) - 1;
             else
-                pagecount = Math.floor(data.data / 2)
+                pagecount = Math.floor(data / 2)
         }
         $scope.totalPage = pagecount;
     });
 })
 
-.service('Database', ['$http',
-    function($http) {
+.service('Database', ['$http', '$q',
+    function($http, $q) {
         this.GetFunction = function(url) {
-            var promise = $http.get(url)
-                .success(function(data) {});
-            return promise;
+            var defer = $q.defer();
+            $http.get(url)
+                .success(function(data) {
+                    defer.resolve(data);
+                });
+            return defer.promise;
         }
     }
-])
+]);
