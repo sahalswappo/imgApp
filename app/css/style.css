@@ -120,11 +120,6 @@ body {
     min-height: 150px;
 }
 
-.success img {
-    display: inline-block;
-    position: relative;
-}
-
 span.text-content {
     background: rgba(0, 0, 0, 0.5);
     color: white;
