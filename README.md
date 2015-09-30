@@ -6,13 +6,11 @@ OSX using homebrew
 
 >brew install imagemagick
 
->brew install graphicsmagick
 
 Ubuntu
 
 >sudo apt-get install imagemagick
 
->sudo apt-get install graphicsmagick
 
 Install 
 
