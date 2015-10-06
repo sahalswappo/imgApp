@@ -24,6 +24,7 @@ app.config(['$routeProvider',
 
     $scope.upload = function(files) {
         if (files) {
+            $scope.success = false;
             var file = files;
             if (!file.$error) {
                 Upload.upload({
@@ -31,12 +32,12 @@ app.config(['$routeProvider',
                     file: file
                 }).success(function(data, status, headers, config) {
                     if (data.image) {
-                        $scope.success = true;
                         $scope.files = null;
                         $scope.imgUrl = data.image;
                         $timeout(function() {
+                            $scope.success = true;
                             $scope.thumbnail = new Array(data.thumbnail);
-                        },200);
+                        }, 200);
                     } else {
                         $scope.success = false;
                         $scope.failedUpload = true;
